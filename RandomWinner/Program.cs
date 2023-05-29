@@ -8,5 +8,6 @@ public class Program
     {
         RandomWinner randomWinner = new RandomWinner();
         randomWinner.Run();
+        randomWinner.TestCode(100);
     }
 }

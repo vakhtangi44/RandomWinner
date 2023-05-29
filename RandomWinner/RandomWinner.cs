@@ -9,7 +9,7 @@
             {"John", 5},
             {"Mike", 3},
             {"Walter", 8},
-            {"Gus", 2},
+            {"Gus", 15},
             {"Jane", 4},
             {"Robin", 6},
             {"Lily", 1},
@@ -30,6 +30,31 @@
         CalculateWinningPercentage(participants);
     }
 
+    public void TestCode(int tries)
+    {
+        Dictionary<string, int> wins = new Dictionary<string, int>();
+
+        for (int i = 0; i < tries; i++)
+        {
+            List<string> participants = GetParticipants();
+            Random random = new Random();
+            string winner = participants[random.Next(participants.Count)];
+
+            if (wins.ContainsKey(winner))
+                wins[winner]++;
+            else
+                wins[winner] = 1;
+        }
+
+        Console.WriteLine("\nTest Results (Number of Wins):");
+        foreach (var employee in wins)
+        {
+            Console.WriteLine(employee.Key + ": " + employee.Value);
+        }
+
+        CalculateWinningPercentage(wins.Select(x => x.Key).ToList());
+    }
+
     private List<string> GetParticipants()
     {
         return employees.SelectMany(employee => Enumerable.Repeat(employee.Key, employee.Value)).ToList();
@@ -41,7 +66,7 @@
 
         var winningPercentages = employees.ToDictionary(
             employee => employee.Key,
-            employee => (double)employee.Value / totalParticipants * 100
+            employee => (double)participants.Count(p => p == employee.Key) / totalParticipants * 100
         );
 
         Console.WriteLine("\nWinning Percentages:");
